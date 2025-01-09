@@ -1,1 +1,2 @@
-# Projet Dofus
+# Projet API Boutique
+
