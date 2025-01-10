@@ -1,9 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const { getAllBallons } = require('../controllers/ballonsController');
+const ballonController = require('../controllers/ballonsController');
 
-const authenticateToken = require('../middleware/auth');
+// Obtenir tous les ballons
+router.get('/', ballonController.getAllBallons);
 
-router.get('/', authenticateToken, getAllBallons);
+// Obtenir un ballon par ID
+router.get('/:id', ballonController.getBallonById);
+
+// Créer un ballon (admin uniquement)
+router.post('/', ballonController.createBallon);
+
+// Mettre à jour un ballon (admin uniquement)
+router.put('/:id', ballonController.updateBallon);
+
+// Supprimer un ballon (admin uniquement)
+router.delete('/:id', ballonController.deleteBallon);
 
 module.exports = router;
