@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
         prenomUtilisateur: { type: DataTypes.STRING, allowNull: false },
         telUtilisateur: { type: DataTypes.STRING, allowNull: false },
         isActif: { type: DataTypes.BOOLEAN, defaultValue: true },
-        dateCreation: { type: DataTypes.DATE, allowNull: false },
+        dateCreation: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
         dateModif: { type: DataTypes.DATE },
         dateSuppresion: { type: DataTypes.DATE }
     }, { timestamps: false });

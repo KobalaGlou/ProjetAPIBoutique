@@ -3,19 +3,19 @@ const { sequelize } = require('../config/db');
 const models = {};
 
 // Import des modèles
-models.TypeUtilisateur = require('./type_utilisateur')(sequelize);
-models.Utilisateur = require('./utilisateur')(sequelize);
-models.Produit = require('./produit')(sequelize);
-models.Sac = require('./sac')(sequelize);
-models.Ballon = require('./ballon')(sequelize);
-models.Service = require('./service')(sequelize);
-models.StockMouvement = require('./stock_mouvement')(sequelize);
-models.Commande = require('./commande')(sequelize);
-models.Message = require('./message')(sequelize);
-models.Adresse = require('./adresse')(sequelize);
-models.Commentaire = require('./commentaire')(sequelize);
-models.DemandeAffectation = require('./demande_affectation')(sequelize);
-models.DetailCommande = require('./detail_commande')(sequelize);
+models.TypeUtilisateur = require('./Type_utilisateur')(sequelize);
+models.Utilisateur = require('./Utilisateur')(sequelize);
+models.Produit = require('./Produit')(sequelize);
+models.Sac = require('./Sac')(sequelize);
+models.Ballon = require('./Ballon')(sequelize);
+models.Service = require('./Service')(sequelize);
+models.StockMouvement = require('./Stock_mouvement')(sequelize);
+models.Commande = require('./Commande')(sequelize);
+models.Message = require('./Message')(sequelize);
+models.Adresse = require('./Adresse')(sequelize);
+models.Commentaire = require('./Commentaire')(sequelize);
+models.DemandeAffectation = require('./Demande_affectation')(sequelize);
+models.DetailCommande = require('./Detail_commande')(sequelize);
 models.Livraison = require('./livraison')(sequelize);
 
 // Définition des relations entre les modèles
@@ -67,7 +67,7 @@ models.DetailCommande.belongsTo(models.Produit, { foreignKey: 'idProduit' });
 models.StockMouvement.belongsTo(models.Produit, { foreignKey: 'idProduit' });
 
 // 🔹 Synchronisation avec la base de données
-sequelize.sync({ alter: true })
+sequelize.sync({ force: false })
     .then(() => console.log('✅ Base de données synchronisée'))
     .catch(err => console.error('❌ Erreur de synchronisation :', err));
 
