@@ -2,7 +2,7 @@ const io = require("socket.io-client");
 const readline = require("readline");
 
 // Connexion au serveur WebSocket
-const socket = io("http://192.168.56.1:3000", {
+const socket = io("http://192.168.56.1:3000/socketio", {
     reconnectionAttempts: 5, // Nombre de tentatives de reconnexion
     timeout: 5000, // Timeout en ms (5 sec)
 });

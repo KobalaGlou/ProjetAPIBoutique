@@ -39,6 +39,9 @@ models.Produit.hasMany(models.Service, { foreignKey: 'idProduit' });
 models.Produit.hasMany(models.StockMouvement, { foreignKey: 'idProduit' });
 models.Produit.hasMany(models.Commentaire, { foreignKey: 'idProduit' });
 
+// 🔹 Relations Service
+models.Service.belongsTo(models.Produit, { foreignKey: 'idProduit' });
+
 // 🔹 Relations Commande
 models.Commande.belongsTo(models.Utilisateur, { foreignKey: 'idUtilisateur' });
 models.Commande.hasMany(models.DetailCommande, { foreignKey: 'idCommande' });
