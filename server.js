@@ -49,13 +49,13 @@ io.on('connection', (socket) => {
     socket.on('message', (message) => {
         console.log(`📩 Message reçu : ${message}`);
 
-        // Vérifier si l'utilisateur a tapé la commande /dab
+        // Vérifier si c'est une commande /dab
         if (message.startsWith('/dab ')) {
             console.log("ça marche");
             const montant = parseFloat(message.split(' ')[1]);
 
             if (isNaN(montant) || montant <= 0) {
-                socket.emit('message', { id: socket.id, message: "⚠️ Montant invalide. Utilisation : /dab <prix>" });
+                socket.emit('message', { id: socket.id, message: "⚠️ Montant invalide. Utilisation : /dab <prix>", isPrivate: true });
                 return;
             }
 
@@ -72,15 +72,15 @@ io.on('connection', (socket) => {
             });
 
             const reponse = `💰 Distribution pour ${montant}€ :\n` + distribution.join(', ');
-            
+
             // Envoyer UNIQUEMENT au demandeur
-            console.log(reponse)
-            socket.emit('message', { id: socket.id, message: reponse });
+            socket.emit('message', { id: socket.id, message: reponse, isPrivate: true });
         } else {
-            // Réémet le message en incluant l'ID du client qui l'a envoyé
+            // Message normal → on l'envoie à tout le monde
             io.emit('message', { message, id: socket.id });
         }
     });
+
 
     socket.on('disconnect', () => {
         console.log(`🔴 Utilisateur déconnecté : ${socket.id}`);

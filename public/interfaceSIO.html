@@ -130,10 +130,12 @@
 
 
         socket.on('message', (data) => {
-            if (data.id !== socket.id) {
-                addMessage(data.message, data.id === socket.id); // Ajoute le message avec la bonne classe
+            // Si c'est un message normal, on l'affiche à tout le monde
+            if (data.id !== socket.id || data.isPrivate) {
+                addMessage(data.message, data.id === socket.id);
             }
         });
+
 
         // Modification de l'envoi du message
         sendButton.addEventListener('click', () => {
