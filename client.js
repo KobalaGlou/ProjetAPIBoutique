@@ -2,7 +2,8 @@ const io = require("socket.io-client");
 const readline = require("readline");
 
 // Connexion au serveur WebSocket
-const socket = io("http://192.168.56.1:3000/socketio", {
+const socket = io("http://localhost:3000", {
+    path:"/socketio",
     reconnectionAttempts: 5, // Nombre de tentatives de reconnexion
     timeout: 5000, // Timeout en ms (5 sec)
 });
@@ -27,6 +28,7 @@ socket.on("reconnect_attempt", () => {
 // Debug : Afficher les erreurs de connexion
 socket.on("connect_error", (error) => {
     console.error(`❌ Erreur de connexion : ${error.message}`);
+    console.error(error);
 });
 
 // Debug : Vérifier la déconnexion
@@ -37,7 +39,9 @@ socket.on("disconnect", (reason) => {
 
 // Écouter les messages du serveur
 socket.on("message", (data) => {
-    console.log(`📩 Nouveau message reçu : ${data}`);
+    if (data.id !== socket.id) { // Vérifie si l'expéditeur est un autre utilisateur
+        console.log(`📩 Nouveau message reçu : ${data.message}`);
+    }
 });
 
 // Fonction pour envoyer des messages depuis le terminal
@@ -47,8 +51,8 @@ function demanderMessage() {
             console.log("⚠️ Message vide, réessaie !");
         } else {
             console.log(`📤 Envoi du message : ${message}`);
-            socket.emit("message", message);
+            socket.emit("message", { message, id: socket.id }); // Envoi avec l'ID
         }
-        demanderMessage(); // Relancer la question après chaque message
+        demanderMessage();
     });
 }
