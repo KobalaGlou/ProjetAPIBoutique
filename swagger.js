@@ -11,7 +11,7 @@ const options = {
         },
         servers: [
             {
-                url: 'http://localhost:3000', // Change selon ton environnement
+                url: 'http://31.207.38.203', // Change selon ton environnement
                 description: 'Serveur de développement',
             },
         ],

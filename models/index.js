@@ -16,7 +16,7 @@ models.Adresse = require('./Adresse')(sequelize);
 models.Commentaire = require('./Commentaire')(sequelize);
 models.DemandeAffectation = require('./Demande_affectation')(sequelize);
 models.DetailCommande = require('./Detail_commande')(sequelize);
-models.Livraison = require('./livraison')(sequelize);
+models.Livraison = require('./Livraison')(sequelize);
 
 // Définition des relations entre les modèles
 
