@@ -9,6 +9,7 @@ if (!jwtSecret) {
 
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
+    console.log(authHeader);
     if (!authHeader) return res.status(403).json({ message: 'Token manquant' });
 
     const token = authHeader.split(' ')[1]; // Récupère seulement le token

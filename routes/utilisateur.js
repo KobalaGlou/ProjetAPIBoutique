@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const UtilisateurController = require('../controllers/utilisateurController');
+const authenticate = require('../middleware/auth')
 
 /**
  * @swagger
@@ -21,7 +22,7 @@ const UtilisateurController = require('../controllers/utilisateurController');
  *       200:
  *         description: Liste des utilisateurs
  */
-router.get('/', UtilisateurController.getAllUtilisateurs);
+router.get('/',authenticate, UtilisateurController.getAllUtilisateurs);
 
 /**
  * @swagger
@@ -42,7 +43,7 @@ router.get('/', UtilisateurController.getAllUtilisateurs);
  *       200:
  *         description: Détails de l'utilisateur
  */
-router.get('/:idUtilisateur', UtilisateurController.getUtilisateurById);
+router.get('/:idUtilisateur',authenticate, UtilisateurController.getUtilisateurById);
 
 /**
  * @swagger
@@ -76,7 +77,7 @@ router.get('/:idUtilisateur', UtilisateurController.getUtilisateurById);
  *       201:
  *         description: Utilisateur créé avec succès
  */
-router.post('/', UtilisateurController.createUtilisateur);
+router.post('/',authenticate, UtilisateurController.createUtilisateur);
 
 /**
  * @swagger
@@ -103,7 +104,7 @@ router.post('/', UtilisateurController.createUtilisateur);
  *       200:
  *         description: Utilisateur mis à jour avec succès
  */
-router.put('/:idUtilisateur', UtilisateurController.updateUtilisateur);
+router.put('/:idUtilisateur',authenticate, UtilisateurController.updateUtilisateur);
 
 /**
  * @swagger
@@ -124,6 +125,6 @@ router.put('/:idUtilisateur', UtilisateurController.updateUtilisateur);
  *       200:
  *         description: Utilisateur supprimé avec succès
  */
-router.delete('/:idUtilisateur', UtilisateurController.deleteUtilisateur);
+router.delete('/:idUtilisateur',authenticate, UtilisateurController.deleteUtilisateur);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const TypeUtilisateurController = require('../controllers/typeutilisateurController');
+const authenticate = require('../middleware/auth')
 
 /**
  * @swagger
@@ -36,7 +37,7 @@ const TypeUtilisateurController = require('../controllers/typeutilisateurControl
  *                     type: string
  *                     example: "Admin"
  */
-router.get('/', TypeUtilisateurController.getAllTypeUtilisateurs);
+router.get('/',authenticate, TypeUtilisateurController.getAllTypeUtilisateurs);
 
 /**
  * @swagger
@@ -73,7 +74,7 @@ router.get('/', TypeUtilisateurController.getAllTypeUtilisateurs);
  *       404:
  *         description: Type d'utilisateur non trouvé
  */
-router.get('/:id', TypeUtilisateurController.getTypeUtilisateurById);
+router.get('/:id',authenticate, TypeUtilisateurController.getTypeUtilisateurById);
 
 /**
  * @swagger
@@ -101,7 +102,7 @@ router.get('/:id', TypeUtilisateurController.getTypeUtilisateurById);
  *       400:
  *         description: Données invalides
  */
-router.post('/', TypeUtilisateurController.createTypeUtilisateur);
+router.post('/',authenticate, TypeUtilisateurController.createTypeUtilisateur);
 
 /**
  * @swagger
@@ -139,7 +140,7 @@ router.post('/', TypeUtilisateurController.createTypeUtilisateur);
  *       404:
  *         description: Type d'utilisateur non trouvé
  */
-router.put('/:id', TypeUtilisateurController.updateTypeUtilisateur);
+router.put('/:id',authenticate, TypeUtilisateurController.updateTypeUtilisateur);
 
 /**
  * @swagger
@@ -165,6 +166,6 @@ router.put('/:id', TypeUtilisateurController.updateTypeUtilisateur);
  *       404:
  *         description: Type d'utilisateur non trouvé
  */
-router.delete('/:id', TypeUtilisateurController.deleteTypeUtilisateur);
+router.delete('/:id',authenticate, TypeUtilisateurController.deleteTypeUtilisateur);
 
 module.exports = router;
