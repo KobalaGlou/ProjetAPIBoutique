@@ -31,6 +31,7 @@ const db = require('./models');
 const ballonsRoutes = require('./routes/ballons');
 const authRoutes = require('./routes/auth');
 const typeUtilisateurRoutes = require('./routes/typeutilisateur');
+const utilisateurRoutes = require('./routes/utilisateur');
 
 app.get('/', (req, res) => {
     res.send('Bienvenue sur mon API avec SQL Server 🚀');
@@ -44,6 +45,9 @@ app.get("/v0/socket", (req, res) => {
 app.use('/ballons', ballonsRoutes);
 app.use('/v0/auth/', authRoutes);
 app.use('/v0/type-utilisateur', typeUtilisateurRoutes);
+app.use('/v0/utilisateur', utilisateurRoutes);
+
+
 
 // Appeler setupSwagger pour initialiser Swagger
 setupSwagger(app);
