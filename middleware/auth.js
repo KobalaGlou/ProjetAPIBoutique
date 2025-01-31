@@ -9,12 +9,17 @@ if (!jwtSecret) {
 
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
-    console.log(authHeader);
-    if (!authHeader) return res.status(403).json({ message: 'Token manquant' });
+    console.log(authHeader); // Optionnel, à garder pour le debug
+
+    if (!authHeader) {
+        return res.status(401).json({ message: 'Token requis' }); // Changer de 403 à 401
+    }
 
     const token = authHeader.split(' ')[1]; // Récupère seulement le token
     jwt.verify(token, jwtSecret, (err, user) => {
-        if (err) return res.status(403).json({ message: 'Token invalide' });
+        if (err) {
+            return res.status(401).json({ message: 'Token invalide' }); // Changer de 403 à 401
+        }
 
         req.user = user; // Ajoute l'utilisateur dans la requête
         next();

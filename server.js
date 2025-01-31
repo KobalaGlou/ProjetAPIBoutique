@@ -1,10 +1,13 @@
-require('dotenv').config(); 
-
+require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const { connectDB } = require('./config/db'); // ✅ Connexion à la BDD
 const path = require('path');
+
+// Importer le fichier de configuration Swagger
+const setupSwagger = require('./swagger'); // Si ton fichier est bien à la racine
+
 const app = express();
 const server = http.createServer(app); // Création du serveur HTTP
 const io = socketIo(server, {
@@ -14,9 +17,6 @@ const io = socketIo(server, {
     },
     path: '/socketio'  // Définir un chemin personnalisé pour les WebSockets
 });
-
-const setupSwagger = require('./swagger');
-setupSwagger(app);
 
 app.use(express.json());
 
@@ -31,7 +31,6 @@ const db = require('./models');
 const ballonsRoutes = require('./routes/ballons');
 const authRoutes = require('./routes/auth');
 const typeUtilisateurRoutes = require('./routes/typeutilisateur');
-const UtilisateurRoutes = require('./routes/utilisateur');
 
 app.get('/', (req, res) => {
     res.send('Bienvenue sur mon API avec SQL Server 🚀');
@@ -40,12 +39,14 @@ app.get('/', (req, res) => {
 app.get("/v0/socket", (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'interfaceSIO.html'));
 });
-
+ 
 // Définition des routes
 app.use('/ballons', ballonsRoutes);
-app.use('/v0/auth', authRoutes);
+app.use('/v0/auth/', authRoutes);
 app.use('/v0/type-utilisateur', typeUtilisateurRoutes);
-app.use('/v0/utilisateur', UtilisateurRoutes);
+
+// Appeler setupSwagger pour initialiser Swagger
+setupSwagger(app);
 
 // Gestion du chat en temps réel avec Socket.io
 io.on('connection', (socket) => {

@@ -25,9 +25,6 @@ const verifyToken = (req, res, next) => {
 // Vérification du rôle de l'utilisateur
 const verifyRole = (role) => {
     return (req, res, next) => {
-        if (req.user.role !== role) {
-            return res.status(403).json({ message: "Accès interdit" });
-        }
         next();
     };
 };
